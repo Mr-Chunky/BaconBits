@@ -41,7 +41,23 @@ services:
       WORDPRESS_DEBUG_LOG: 1
       WORDPRESS_DEBUG_DISPLAY: 1
     volumes:
-      - .:/app
+      - .:/var/www/html
+    networks:
+      - baconbits_network
+
+  baconbits-wpcli:
+    image: wordpress:cli
+    container_name: baconbits_wpcli
+    depends_on:
+      - baconbits-db
+      - baconbits-wordpress
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+    volumes:
+      - .:/var/www/html
     networks:
       - baconbits_network
 
@@ -67,9 +83,10 @@ services:
     volumes:
       - ./frontend:/app # Mounts your local 'frontend' folder into the container
     working_dir: /app
-    command: sh -c "npm install && npm run dev" # Installs dependencies and starts dev server automatically
+    command: sh -c "npm install && exec npm run dev" # Installs dependencies and starts dev server automatically
     environment:
       - NEXT_PUBLIC_WORDPRESS_API_URL=http://baconbits-wordpress/graphql # Internal network URL for server-side fetching
+      - HOSTNAME=0.0.0.0 # Set to listen on all interfaces
     depends_on:
       - baconbits-wordpress
     networks:
