@@ -2,6 +2,7 @@
 .env
 .env.local
 wp-config.php
+.htaccess
 
 # 2. WordPress Core (Docker handles these)
 wp-admin/
