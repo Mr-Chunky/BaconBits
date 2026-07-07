@@ -1,0 +1,30 @@
+# 1. Environment and Secrets
+.env
+.env.local
+wp-config.php
+
+# 2. WordPress Core (Docker handles these)
+wp-admin/
+wp-includes/
+*.php
+!wp-content/
+
+# 3. WordPress Content Exceptions
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/blogs.dir/
+wp-content/languages/
+
+# 4. Default / Third-Party Themes & Plugins
+wp-content/themes/twenty*/
+wp-content/plugins/hello.php
+wp-content/plugins/akismet/
+
+# 5. Local Database Backups & Dumps
+*.sql
+*.sql.gz
+
+# 6. Docker & OS overhead
+.DS_Store
+Thumbs.db
