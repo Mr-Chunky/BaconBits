@@ -59,7 +59,7 @@ services:
       - baconbits_network
 
   baconbits-frontend:
-    image: node:18-alpine
+    image: node:22-alpine
     container_name: baconbits_frontend
     restart: always
     ports:
